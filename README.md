@@ -33,6 +33,8 @@ module load anaconda/python-3.6.5/5.2
 9. Open Python and use parmed to convert prmtop and inpcrd files to gromacs topology and structure files (.gro and .top files)
 ```
 python3
+```
+```
 parm=pmd.load_file('3f8f_solv.prmtop', '3f8f_solv.inpcrd')
 parm.save('3F8F_gromacs.top', format='gromacs')
 parm.save('3F8F_gromacs.gro')
