@@ -27,7 +27,7 @@ pluma tleap.out
 ```
 7. Load VMD module to visualise solvated protein structure
 ```
-vglrun vmd 3F8F_solv.pdb
+vglrun vmd 3F8F_solv_tleap.pdb
 ```
 8. Load Python
 ```
@@ -40,7 +40,7 @@ python3
 ```
 ```
 import parmed as pmd
-parm=pmd.load_file('3f8f_solv.prmtop', '3f8f_solv.inpcrd')
+parm=pmd.load_file('3f8f_solv_tleap.prmtop', '3f8f_solv_tleap.inpcrd')
 parm.save('3F8F_gromacs.top', format='gromacs')
 parm.save('3F8F_gromacs.gro')
 quit()
@@ -75,6 +75,7 @@ gmx_mpi genrestr -f chainb.pdb -o posre-b.itp
 #endif
 ```
 # Run MD
+1. Before running Md, control all files with .sh extension, and correct account id part.
 ```
 sbatch gromacs-all-md.sh
 ```
