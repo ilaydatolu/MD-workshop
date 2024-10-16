@@ -1,4 +1,5 @@
 # MD-workshop
+# Preparation of the systems
 1. Download pdb Structure (PDB ID:3F8F) from RCSB website. https://www.rcsb.org/ 
 2. Visualise protein structure using VMD.
 ```
@@ -14,8 +15,10 @@ pluma 3F8F.pdb
 grep -v HOH 3F8F.pdb > 3F8F_dry.pdb
 grep -v HETATM 3F8F_dry.pdb > 3F8F_dry_clean.pdb
 ```
-5. Run tleap to create dry and solvated systems
+5. Load Amber, Run tleap to create dry and solvated systems
 ```
+module load amber/intel-2020.4/20.0
+source $AMBERHOME/amber.sh
 tleap -s -f tleap.in > tleap.out
 ```
 6. Read tleap.out file, and also check if prmtop and inpcrd files are created.
@@ -33,8 +36,10 @@ module load anaconda/python-3.6.5/5.2
 9. Open Python and use parmed to convert prmtop and inpcrd files to gromacs topology and structure files (.gro and .top files)
 ```
 python3
+
 ```
 ```
+import parmed as pmd
 parm=pmd.load_file('3f8f_solv.prmtop', '3f8f_solv.inpcrd')
 parm.save('3F8F_gromacs.top', format='gromacs')
 parm.save('3F8F_gromacs.gro')
@@ -47,9 +52,40 @@ module load gromacs/intel-2022.2/2022.1-single
 gmx_mpi genrestr -f chaina.pdb -o posre-a.itp
 gmx_mpi genrestr -f chainb.pdb -o posre-b.itp
 ```
-12. Position restrain files are needed to added 3F8F_gromacs.top topology file. There are 2 systems and solvent molecules are defined in topology file. At the end of each of system, starting with [moleculetype], add the below comment.
+12. Position restrain files are needed to included in 3F8F_gromacs.top topology file. Two systems (chain a and chain b) and solvent are defined in the topology file(as seen at the end of 3F8F_gromacs.top file). At the end of each of system, starting with [moleculetype], add the below comment for both system.
+```
+; Include Position restraint file
+#ifdef POSRES
+#include "posre-a.itp"
+#endif
+```
+```
 ; Include Position restraint file
 #ifdef POSRES
 #include "posre-b.itp"
 #endif
 ```
+13. Position restrain on the oxygen atom of water molecules needs to be added into the related part.(At the end of water defined part in topology file)
+```
+#ifdef POSRES_WATER
+; Position restraint for each water oxygen
+[ position_restraints ]
+;  i funct       fcx        fcy        fcz
+   1    1       1000       1000       1000
+#endif
+```
+# Run MD
+```
+sbatch gromacs-all-md.sh
+```
+# Analysis
+1. RMSD analysis
+```
+gmx-mpi rms -s md_1ns.tpr -f md_1ns.xtc -o rmsd.xvg -tu ns
+```
+2. Solvent Accesible Surface Area Analysis (SASA)
+```
+gmx_mpi sasa -f md_1ns.xtc -s md_1ns.tpr -o sasa.xvg
+```
+
+
