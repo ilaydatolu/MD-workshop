@@ -15,8 +15,9 @@ pluma 3F8F.pdb
 grep -v HOH 3F8F.pdb > 3F8F_dry.pdb
 grep ATOM 3F8F_dry.pdb > 3F8F_dry_clean.pdb
 ```
-5. Load Amber, Run tleap to create dry and solvated systems
-```bash
+5. Load Amber and run tleap to create dry and solvated systems
+```
+>>>>>>> 85ca8ffe4b620f049f39e3c63c7e7b6a48715bfb
 module load amber/intel-2020.4/20.0
 source $AMBERHOME/amber.sh
 tleap -s -f tleap.in > tleap.out
