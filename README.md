@@ -16,7 +16,11 @@ grep -v HOH 3F8F.pdb > 3F8F_dry.pdb
 grep ATOM 3F8F_dry.pdb > 3F8F_dry_clean.pdb
 ```
 5. Load Amber and run tleap to create dry and solvated systems
+<<<<<<< HEAD
+```
+=======
 ```bash
+>>>>>>> 7537cfd303ad0e73ab3b611bac13cc73a4fbd997
 module load amber/intel-2020.4/20.0
 source $AMBERHOME/amber.sh
 tleap -s -f tleap.in > tleap.out
@@ -31,7 +35,7 @@ vglrun vmd 3F8F_solv_tleap.pdb
 ```
 8. Load Python
 ```bash
-module load anaconda/python-3.6.5/5.2
+module load anaconda/python-3.8.8/2021.05 
 ```
 9. Open Python and use parmed to convert prmtop and inpcrd files to gromacs topology and structure files (.gro and .top files)
 ```bash
@@ -39,7 +43,7 @@ python3
 ```
 ```python
 import parmed as pmd
-parm=pmd.load_file('3f8f_solv_tleap.prmtop', '3f8f_solv_tleap.inpcrd')
+parm=pmd.load_file('3F8F_solv_tleap.prmtop', '3F8F_solv_tleap.inpcrd')
 parm.save('3F8F_gromacs.top', format='gromacs')
 parm.save('3F8F_gromacs.gro')
 quit()
@@ -64,8 +68,13 @@ gmx_mpi genrestr -f chainb.pdb -o posre-b.itp
 #include "posre-b.itp"
 #endif
 ```
+<<<<<<< HEAD
+13. Position restrain on the oxygen atom of water molecules needs to be added into the related part. (At the end of water defined part in topology file)
+```
+=======
 13. Position restrain on the oxygen atom of water molecules needs to be added into the related part.(At the end of water defined part in topology file)
 ```scala
+>>>>>>> 7537cfd303ad0e73ab3b611bac13cc73a4fbd997
 #ifdef POSRES_WATER
 ; Position restraint for each water oxygen
 [ position_restraints ]
