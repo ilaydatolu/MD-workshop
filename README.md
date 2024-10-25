@@ -109,7 +109,7 @@ module load gromacs/intel-2022.2/2022.1-single
 #------------------------------------------------------
 # Energy minimization (no mpirun, specific mpi cores with "-ntmpi")
 gmx_mpi grompp -f min.mdp -c 3F8F_gromacs.gro -p 3F8F_gromacs.top -o em.tpr
-gmx_mpi mdrun -ntmpi 10 -deffnm em
+gmx_mpi mdrun -ntmpi 16 -deffnm em
 ...
 ```
 
