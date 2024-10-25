@@ -66,7 +66,6 @@ gmx_mpi genrestr -f chainb.pdb -o posre-b.itp
 ```
 13. Position restrain on the oxygen atom of water molecules needs to be added into the related part. (At the end of water defined part in topology file)
 ```scala
->>>>>>> 7537cfd303ad0e73ab3b611bac13cc73a4fbd997
 #ifdef POSRES_WATER
 ; Position restraint for each water oxygen
 [ position_restraints ]
@@ -148,6 +147,14 @@ mpirun -np $SLURM_NTASKS gmx_mpi grompp -f min.mdp -c 3F8F_gromacs.gro -p 3F8F_g
 
 mpirun -np $SLURM_NTASKS gmx_mpi mdrun -deffnm em
 ```
+
+We can visualise the trajectory using:
+```bash
+vglrun vmd md_1ns.gro md_1ns.xtc
+```
+
+Which has a lot of options for how to display different parts of a simulation
+![](figures/traj.png)
 
 
 # Analysis
