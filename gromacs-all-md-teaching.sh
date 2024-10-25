@@ -45,22 +45,22 @@ module load gromacs/intel-2022.2/2022.1-single
 # Energy minimization
 gmx_mpi grompp -f min.mdp -c 3F8F_gromacs.gro -p 3F8F_gromacs.top -o em.tpr
 
-gmx_mpi mdrun -ntmpi 10 -deffnm em
+gmx_mpi mdrun -ntmpi 16 -deffnm em
 
 # NVT equilibration
-mpirun -np $SLURM_NTASKS gmx_mpi grompp -f nvt.mdp -c em.gro -r em.gro -p 3F8F_gromacs.top -o nvt.tpr
+gmx_mpi grompp -f nvt.mdp -c em.gro -r em.gro -p 3F8F_gromacs.top -o nvt.tpr
 
-mpirun -np $SLURM_NTASKS gmx_mpi mdrun -deffnm nvt
+gmx_mpi mdrun -ntmpi 16 -deffnm nvt
 
 # NPT equilibration
-mpirun -np $SLURM_NTASKS gmx_mpi grompp -f npt.mdp -c nvt.gro -r nvt.gro -t nvt.cpt -p 3F8F_gromacs.top -o npt.tpr
+gmx_mpi grompp -f npt.mdp -c nvt.gro -r nvt.gro -t nvt.cpt -p 3F8F_gromacs.top -o npt.tpr
 
-mpirun -np $SLURM_NTASKS gmx_mpi mdrun -deffnm npt
+gmx_mpi mdrun -ntmpi 16 -deffnm npt
 
 # Molecular dynamics simulation
-mpirun -np $SLURM_NTASKS gmx_mpi grompp -f md.mdp -c npt.gro -t npt.cpt -p 3F8F_gromacs.top -o md_1ns.tpr
+gmx_mpi grompp -f md.mdp -c npt.gro -t npt.cpt -p 3F8F_gromacs.top -o md_1ns.tpr
 
-mpirun -np $SLURM_NTASKS gmx_mpi mdrun -deffnm md_1ns
+gmx_mpi mdrun -ntmpi 16 -deffnm md_1ns
 
 echo "Simulation is finished!"
 
