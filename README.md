@@ -152,7 +152,7 @@ mpirun -np $SLURM_NTASKS gmx_mpi mdrun -deffnm em
 # Analysis
 1. RMSD analysis
 ```bash
-gmx-mpi rms -s md_1ns.tpr -f md_1ns.xtc -o rmsd.xvg -tu ns
+gmx_mpi rms -s md_1ns.tpr -f md_1ns.xtc -o rmsd.xvg -tu ns
 ```
 2. Solvent Accesible Surface Area Analysis (SASA)
 ```bash
