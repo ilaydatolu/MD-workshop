@@ -151,13 +151,19 @@ mpirun -np $SLURM_NTASKS gmx_mpi mdrun -deffnm em
 
 
 # Analysis
-1. RMSD analysis
+1. RMSD analysis (select Protein/1 both times)
 ```bash
 gmx_mpi rms -s md_1ns.tpr -f md_1ns.xtc -o rmsd.xvg -tu ns
 ```
-2. Solvent Accesible Surface Area Analysis (SASA)
+2. Solvent Accesible Surface Area Analysis (SASA) (select Protein/1)
 ```bash
 gmx_mpi sasa -f md_1ns.xtc -s md_1ns.tpr -o sasa.xvg
 ```
 
 
+You can visualise these analyses using 
+```bash
+xmgrace sasa.xvg
+```
+
+![figures/SASA.png](figures/SASA.png)
