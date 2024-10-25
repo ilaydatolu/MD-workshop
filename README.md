@@ -16,11 +16,7 @@ grep -v HOH 3F8F.pdb > 3F8F_dry.pdb
 grep ATOM 3F8F_dry.pdb > 3F8F_dry_clean.pdb
 ```
 5. Load Amber and run tleap to create dry and solvated systems
-<<<<<<< HEAD
-```
-=======
 ```bash
->>>>>>> 7537cfd303ad0e73ab3b611bac13cc73a4fbd997
 module load amber/intel-2020.4/20.0
 source $AMBERHOME/amber.sh
 tleap -s -f tleap.in > tleap.out
@@ -68,11 +64,7 @@ gmx_mpi genrestr -f chainb.pdb -o posre-b.itp
 #include "posre-b.itp"
 #endif
 ```
-<<<<<<< HEAD
 13. Position restrain on the oxygen atom of water molecules needs to be added into the related part. (At the end of water defined part in topology file)
-```
-=======
-13. Position restrain on the oxygen atom of water molecules needs to be added into the related part.(At the end of water defined part in topology file)
 ```scala
 >>>>>>> 7537cfd303ad0e73ab3b611bac13cc73a4fbd997
 #ifdef POSRES_WATER
