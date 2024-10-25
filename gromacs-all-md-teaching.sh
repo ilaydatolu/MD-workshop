@@ -15,11 +15,11 @@
 # Specify project account
 #SBATCH --account=tuttle-rmss
 #
-# No. of tasks required (max of 40), all cores on the same node
-#SBATCH --ntasks=1 --nodes=1
+# No. of tasks required (max of 16), all cores on the same node
+#SBATCH --ntasks=1 --cpus-per-task=16
 #
 # Specify (hard) runtime (HH:MM:SS)
-#SBATCH --time=06:00:00
+#SBATCH --time=20:00:00
 #
 # Job name
 #SBATCH --job-name=md-workshop
