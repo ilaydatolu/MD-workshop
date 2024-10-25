@@ -2,35 +2,35 @@
 # Preparation of the systems
 1. Download pdb Structure (PDB ID:3F8F) from RCSB website. https://www.rcsb.org/ 
 2. Visualise protein structure using VMD.
-```
+```bash
 module load vmd
 vglrun vmd 3F8F.pdb
 ```
 2. Open the PDB using a text editor like vi, nano, pluma, etc.
-```
+```bash
 pluma 3F8F.pdb
 ```
 4. Delete waters and hetero groups.
-```
+```bash
 grep -v HOH 3F8F.pdb > 3F8F_dry.pdb
-grep -v HETATM 3F8F_dry.pdb > 3F8F_dry_clean.pdb
+grep ATOM 3F8F_dry.pdb > 3F8F_dry_clean.pdb
 ```
 5. Load Amber, Run tleap to create dry and solvated systems
-```
+```bash
 module load amber/intel-2020.4/20.0
 source $AMBERHOME/amber.sh
 tleap -s -f tleap.in > tleap.out
 ```
 6. Read tleap.out file, and also check if prmtop and inpcrd files are created.
-```
+```bash
 pluma tleap.out
 ```
 7. Load VMD module to visualise solvated protein structure
-```
+```bash
 vglrun vmd 3F8F_solv_tleap.pdb
 ```
 8. Load Python
-```
+```bash
 module load anaconda/python-3.6.5/5.2
 ```
 9. Open Python and use parmed to convert prmtop and inpcrd files to gromacs topology and structure files (.gro and .top files)
@@ -38,7 +38,7 @@ module load anaconda/python-3.6.5/5.2
 python3
 
 ```
-```
+```python
 import parmed as pmd
 parm=pmd.load_file('3f8f_solv_tleap.prmtop', '3f8f_solv_tleap.inpcrd')
 parm.save('3F8F_gromacs.top', format='gromacs')
@@ -76,16 +76,16 @@ gmx_mpi genrestr -f chainb.pdb -o posre-b.itp
 ```
 # Run MD
 1. Before running Md, control all files with .sh extension, and correct account id part.
-```
+```bash
 sbatch gromacs-all-md.sh
 ```
 # Analysis
 1. RMSD analysis
-```
+```bash
 gmx-mpi rms -s md_1ns.tpr -f md_1ns.xtc -o rmsd.xvg -tu ns
 ```
 2. Solvent Accesible Surface Area Analysis (SASA)
-```
+```bash
 gmx_mpi sasa -f md_1ns.xtc -s md_1ns.tpr -o sasa.xvg
 ```
 
