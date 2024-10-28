@@ -79,7 +79,7 @@ gmx_mpi genrestr -f chainb.pdb -o posre-b.itp
 sbatch gromacs-all-md.sh
 ```
 This will look different if you are using the teaching nodes or the standard nodes:
-### Teaching
+### Teaching - for Tell Tuttle's Students
 
 ```bash
 #!/bin/bash
@@ -110,6 +110,56 @@ module load gromacs/intel-2022.2/2022.1-single
 # Energy minimization (no mpirun, specific mpi cores with "-ntmpi")
 gmx_mpi grompp -f min.mdp -c 3F8F_gromacs.gro -p 3F8F_gromacs.top -o em.tpr
 gmx_mpi mdrun -ntmpi 16 -deffnm em
+...
+```
+### Teaching - General
+```
+#!/bin/bash
+
+#======================================================
+#
+# Job script for running GROMACS on multiple cores (shared) of wee-archie
+#
+#======================================================
+
+#======================================================
+# Propogate environment variables to the compute node
+#SBATCH --export=ALL
+#
+# Run in the standard partition (queue)
+#SBATCH --partition=teaching
+#
+# Specify project account
+#SBATCH --account=teaching
+#
+# No. of tasks required (max. of 16)
+#SBATCH --ntasks=16
+#
+# Specify (hard) runtime (HH:MM:SS)
+#SBATCH --time=24:00:00
+#
+# Job name
+#SBATCH --job-name=md-test
+#
+# Output file
+#SBATCH --output=slurm-%j.out
+#======================================================
+
+module purge
+module load gromacs/intel-2022.2/2022.1-single
+
+
+#======================================================
+# Prologue script to record job details
+# Do not change the line below
+#======================================================
+/opt/software/scripts/job_prologue.sh  
+#------------------------------------------------------
+
+export OMP_NUM_THREADS=16
+
+# Energy minimization
+gmx grompp -f min.mdp -c 3F8F_gromacs.gro -p 3F8F_gromacs.top -o em.tpr
 ...
 ```
 
