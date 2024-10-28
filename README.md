@@ -31,7 +31,7 @@ vglrun vmd 3F8F_solv_tleap.pdb
 ```
 8. Load Python
 ```bash
-module load anaconda/python-3.8.8/2021.05 
+module load anaconda/python-3.10.9/2023.03 
 ```
 9. Open Python and use parmed to convert prmtop and inpcrd files to gromacs topology and structure files (.gro and .top files)
 ```bash
