@@ -29,11 +29,7 @@ pluma tleap.out
 ```bash
 vglrun vmd 3F8F_solv_tleap.pdb
 ```
-8. Load Python
-```bash
-module load anaconda/python-3.10.9/2023.03 
-```
-9. Open Python and use parmed to convert prmtop and inpcrd files to gromacs topology and structure files (.gro and .top files)
+8. Open Python and use parmed to convert prmtop and inpcrd files to gromacs topology and structure files (.gro and .top files)
 ```bash
 python3
 ```
@@ -44,14 +40,14 @@ parm.save('3F8F_gromacs.top', format='gromacs')
 parm.save('3F8F_gromacs.gro')
 quit()
 ```
-10. We need position restrain files for equilibration step. First we need to separate two chains into two text files using pluma etc. (chaina.pdb and chainb.pdb). 
-11. Load gromacs module and create posre files using gromacs command. Only heavy atoms are restrained during equilibration step. (Select Protein-H)
+9. We need position restrain files for equilibration step. First we need to separate two chains into two text files using pluma etc. (chaina.pdb and chainb.pdb). 
+10. Load gromacs module and create posre files using gromacs command. Only heavy atoms are restrained during equilibration step. (Select Protein-H)
 ```bash
 module load gromacs/intel-2022.2/2022.1-single
 gmx_mpi genrestr -f chaina.pdb -o posre-a.itp
 gmx_mpi genrestr -f chainb.pdb -o posre-b.itp
 ```
-12. Position restrain files are needed to included in 3F8F_gromacs.top topology file. Two systems (chain a and chain b) and solvent are defined in the topology file(as seen at the end of 3F8F_gromacs.top file). At the end of each of system, starting with [moleculetype], add the below comment for both system.
+11. Position restrain files are needed to included in 3F8F_gromacs.top topology file. Two systems (chain a and chain b) and solvent are defined in the topology file(as seen at the end of 3F8F_gromacs.top file). At the end of each of system, starting with [moleculetype], add the below comment for both system.
 ```scala
 ; Include Position restraint file
 #ifdef POSRES
@@ -64,7 +60,7 @@ gmx_mpi genrestr -f chainb.pdb -o posre-b.itp
 #include "posre-b.itp"
 #endif
 ```
-13. Position restrain on the oxygen atom of water molecules needs to be added into the related part. (At the end of water defined part in topology file)
+12. Position restrain on the oxygen atom of water molecules needs to be added into the related part. (At the end of water defined part in topology file)
 ```scala
 #ifdef POSRES_WATER
 ; Position restraint for each water oxygen
