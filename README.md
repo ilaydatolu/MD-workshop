@@ -72,7 +72,7 @@ gmx_mpi genrestr -f chainb.pdb -o posre-b.itp
 # Run MD
 1. Before running Md, control all files with .sh extension, and correct account id part.
 ```bash
-sbatch gromacs-all-md.sh
+sbatch gromacs-teaching-test.sh
 ```
 This will look different if you are using the teaching nodes or the standard nodes:
 ### Teaching - for Tell Tuttle's Students
